@@ -1,0 +1,75 @@
+{
+  "name": "@plasius/react-state",
+  "version": "1.0.0",
+  "description": "Tiny, testable, typesafe React Scoped Store helper.",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "react-state",
+    "state-management",
+    "react-context",
+    "react-store",
+    "schema-driven",
+    "typed-state",
+    "plasius",
+    "oss",
+    "typescript",
+    "frontend",
+    "scalability",
+    "portable",
+    "monorepo-friendly"
+  ],
+  "homepage": "https://github.com/Plasius-LTD/react-state#readme",
+  "bugs": {
+    "url": "https://github.com/Plasius-LTD/react-state/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plasius-LTD/react-state.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Plasius LTD",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "prepare": "npm run build",
+    "clean": "rimraf dist",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "e2e:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.43.0",
+    "@typescript-eslint/parser": "^8.43.0",
+    "eslint": "^9.35.0",
+    "jsdom": "^27.0.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@types/react": "^19.1.13",
+    "react": "^19.1.1"
+  }
+}
