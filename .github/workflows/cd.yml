@@ -38,6 +38,8 @@ jobs:
           NEW_VER=$(npm version patch -m "chore: release v%s [skip ci]")
           echo "New version: $NEW_VER"
           git push --follow-tags
+          
+          # Expose tag (vX.Y.Z) and version (X.Y.Z) for later steps
           VER_NO_V=${NEW_VER#v}
           echo "tag=$NEW_VER" >> "$GITHUB_OUTPUT"
           echo "version=$VER_NO_V" >> "$GITHUB_OUTPUT"
