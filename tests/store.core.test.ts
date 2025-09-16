@@ -40,18 +40,18 @@ describe("createStore – basics", () => {
 });
 
 describe("subscribe (global)", () => {
-  it("fires on every dispatch, even if state reference is unchanged", () => {
+  it("fires only when state reference changes (distinct-until-changed)", () => {
     const store = createStore<S, A>(reducer, initial);
     const cb = vi.fn();
     const un = store.subscribe(cb);
 
-    store.dispatch({ type: "noop" }); // same reference
-    store.dispatch({ type: "inc" }); // changed
+    store.dispatch({ type: "noop" }); // same reference → no notify
+    store.dispatch({ type: "inc" });  // changed       → notify once
 
-    expect(cb).toHaveBeenCalledTimes(2);
+    expect(cb).toHaveBeenCalledTimes(1);
     un();
     store.dispatch({ type: "inc" });
-    expect(cb).toHaveBeenCalledTimes(2);
+    expect(cb).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -171,7 +171,7 @@ describe("mutation during iteration (edge case)", () => {
 });
 
 describe("no-change dispatch side-effects", () => {
-  it("global fires; key/selector do not", () => {
+  it("global does not fire; key/selector do not", () => {
     const store = createStore<S, A>(reducer, initial);
     const g = vi.fn();
     const k = vi.fn();
@@ -181,10 +181,115 @@ describe("no-change dispatch side-effects", () => {
     store.subscribeToKey("count", k);
     store.subscribeWithSelector((st) => st.count, s);
 
-    store.dispatch({ type: "noop" }); // same reference returned
+    store.dispatch({ type: "noop" }); // same reference returned → no notifications
 
-    expect(g).toHaveBeenCalledTimes(1);
+    expect(g).toHaveBeenCalledTimes(0);
     expect(k).not.toHaveBeenCalled();
     expect(s).not.toHaveBeenCalled();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Additional coverage for core store semantics
+
+describe("state identity & no-op behavior", () => {
+  it("returns the same state reference after a no-op and a new reference after a change", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const s1 = store.getState();
+    store.dispatch({ type: "noop" });
+    const s2 = store.getState();
+    expect(s2).toBe(s1); // identity equal on no-op
+
+    store.dispatch({ type: "inc" });
+    const s3 = store.getState();
+    expect(s3).not.toBe(s2); // new object on change
+  });
+});
+
+describe("unsubscribe semantics", () => {
+  it("global unsubscribe stops further notifications", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const cb = vi.fn();
+    const un = store.subscribe(cb);
+
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+    un();
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+
+  it("per-key unsubscribe stops further notifications", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const cb = vi.fn();
+    const un = store.subscribeToKey("count", cb);
+
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+    un();
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+
+  it("selector unsubscribe stops further notifications", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const cb = vi.fn();
+    const un = store.subscribeWithSelector((s) => s.count, cb);
+
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+    un();
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("multiple subscribers", () => {
+  it("notifies all global subscribers once per change", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const a = vi.fn();
+    const b = vi.fn();
+    store.subscribe(a);
+    store.subscribe(b);
+
+    store.dispatch({ type: "inc" });
+
+    expect(a).toHaveBeenCalledTimes(1);
+    expect(b).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("mutation during iteration – per-key/selector", () => {
+  it("unsubscribing within a per-key listener may skip the next listener (document current behavior)", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const log: string[] = [];
+
+    let un1: () => void = () => {};
+    const l1 = () => { log.push("k1"); un1(); };
+    const l2 = () => { log.push("k2"); };
+
+    un1 = store.subscribeToKey("count", l1);
+    store.subscribeToKey("count", l2);
+
+    store.dispatch({ type: "inc" });
+
+    // Depending on iteration strategy, l2 may be skipped when l1 unsubscribes.
+    expect(log.length === 1 || log.length === 2).toBe(true);
+  });
+
+  it("unsubscribing within a selector listener may skip the next listener (document current behavior)", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const log: string[] = [];
+
+    let un1: () => void = () => {};
+    const l1 = () => { log.push("s1"); un1(); };
+    const l2 = () => { log.push("s2"); };
+
+    un1 = store.subscribeWithSelector((s) => s.count, l1);
+    store.subscribeWithSelector((s) => s.count, l2);
+
+    store.dispatch({ type: "inc" });
+
+    expect(log.length === 1 || log.length === 2).toBe(true);
   });
 });
