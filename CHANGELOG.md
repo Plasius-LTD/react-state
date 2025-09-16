@@ -1,5 +1,4 @@
 
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -9,41 +8,44 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ---
 
 ## [Unreleased]
-### Added
-- (placeholder) Add new hooks, scoped store features, or context helpers here.
 
-### Changed
-- (placeholder)
+- **Added**
+  - (placeholder) Add new hooks, scoped store features, or context helpers here.
 
-### Fixed
-- (placeholder)
+- **Changed**
+  - (placeholder)
 
-### Security
-- (placeholder)
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
 
 ---
 
-## [0.1.0] - 2025-09-16
-### Added
-- Initial public release of `@plasius/react-state`.
-- `createStore` for basic state container functionality with `dispatch`, `getState`, and subscription API.
-- `createScopedStoreContext` for React integration:
-  - `<Provider>` component wrapping React trees,
-  - `useStore()` to access state,
-  - `useDispatch()` to dispatch actions.
-- Support for per-key subscriptions and selector-based subscriptions.
-- Unit tests with Vitest and component tests with React Testing Library.
-- Early Playwright integration tests for end-to-end validation of store-driven DOM.
+## [1.0.0] - 2025-09-16
 
-### Changed
-- N/A (initial release)
+- **Added**
 
-### Fixed
-- N/A (initial release)
+  - Initial public release of `@plasius/react-state`.
+  - `createStore` for basic state container functionality with `dispatch`, `getState`, and subscription API.
+  - `createScopedStoreContext` for React integration:
+    - `<Provider>` component wrapping React trees,
+    - `useStore()` to access state,
+    - `useDispatch()` to dispatch actions.
+  - Support for per-key subscriptions and selector-based subscriptions.
+  - Unit tests with Vitest and component tests with React Testing Library.
+
+- **Changed**
+  - N/A (initial release)
+
+- **Fixed**
+  - N/A (initial release)
 
 ---
 
 ## Release process (maintainers)
+
 1. Update `CHANGELOG.md` under **Unreleased** with user‑visible changes.
 2. Bump version in `package.json` following SemVer (major/minor/patch).
 3. Move entries from **Unreleased** to a new version section with the current date.
@@ -54,5 +56,5 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v0.1.0
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0

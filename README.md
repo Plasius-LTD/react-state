@@ -25,7 +25,11 @@ npm install @plasius/react-state
 
 ## Usage Example
 
+### Accessing the store
+
 ```tsx
+import { createStore } from '@plasius/react-state'
+
 type Action =
   | { type: "INCREMENT_VALUE"; payload: number }
   | { type: "SET_VALUE"; payload: number }
@@ -57,6 +61,71 @@ const store = createStore<State, Action>(reducer, initialState);
 
 function doSomething() {
   store.dispatch({ type: "INCREMENT_VALUE", payload: 1});
+}
+```
+
+### Scoped react hooks
+
+```tsx
+import { createScopedStore } from '@plasius/react-state'
+
+type Action =
+  | { type: "INCREMENT_VALUE"; payload: number }
+  | { type: "SET_VALUE"; payload: number }
+  | { type: "DECREMENT_VALUE"; payload: number };
+
+interface State {
+  value: number;
+}
+
+const initialState: State = { value: 0 };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "INCREMENT_VALUE":
+      return { ...state, value: state.value + action.payload };
+    case "DECREMENT_VALUE":
+      return { ...state, value: state.value - action.payload };
+    case "SET_VALUE":
+      // Distinct-until-changed: return the SAME reference if no change,
+      // so listeners relying on referential equality will not fire.
+      if (action.payload === state.value) return state;
+      return { ...state, value: action.payload };
+    default:
+      return state;
+  }
+}
+
+const store = createStore<State, Action>(reducer, initialState);
+
+const Counter = () => {
+    const state = store.useStore();
+    const dispatch = store.useDispatch();
+
+    return (
+      <div>
+        <button id="counter-inc" onClick={() => dispatch({ type: "inc" })}>
+          +
+        </button>
+        <button id="counter-dec" onClick={() => dispatch({ type: "dec" })}>
+          -
+        </button>
+        <input
+          aria-label="Counter value"
+          title=""
+          id="counter-set"
+          type="number"
+          value={state.count}
+          onChange={(e) =>
+            dispatch({ type: "set", payload: Number(e.target.value) })
+          }
+        />
+      </div>
+    );
+  };
+
+function App() { 
+  return (<><store.Provider><Counter /></store.Provider></>);
 }
 ```
 
