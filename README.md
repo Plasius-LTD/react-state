@@ -7,15 +7,21 @@
 [![Security Policy](https://img.shields.io/badge/security%20policy-yes-orange.svg)](./SECURITY.md)
 [![Changelog](https://img.shields.io/badge/changelog-md-blue.svg)](./CHANGELOG.md)
 
+---
+
 ## Overview
 
 `@plasius/react-state` provides a scoped state management solution for React applications. It allows developers to create isolated, testable, and composable stores without introducing heavy dependencies.
+
+---
 
 ## Installation
 
 ```bash
 npm install @plasius/react-state
 ```
+
+---
 
 ## Usage Example
 
@@ -54,9 +60,16 @@ function doSomething() {
 }
 ```
 
+---
+
 ## Contributing
 
-Contributions are welcome! Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) and [Contributing Guide](./CONTRIBUTING.md) before submitting PRs.
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Contributor License Agreement](./legal/CLA.md)
+
+---
 
 ## License
 
