@@ -1,4 +1,4 @@
-# @plasius/react-store
+# @plasius/react-state
 
 [![npm version](https://img.shields.io/npm/v/@plasius/react-state.svg)](https://www.npmjs.com/package/@plasius/react-state)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/react-state/ci.yml?branch=main&label=build&style=flat)](https://github.com/plasius/react-state/actions/workflows/ci.yml)
