@@ -9,31 +9,13 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
-- **Added**
-  - (placeholder)
-
-- **Changed**
-  - (placeholder)
-
 - **Fixed**
-  - (placeholder)
+  - CD Pipeline ordering fix for version in CHANGELOG.md
 
-- **Security**
-  - (placeholder)
-
-## [] - 2025-09-17
+## [1.0.7] - 2025-09-17
 
 - **Added**
   - Code coverage added.
-
-- **Changed**
-  - (placeholder)
-
-- **Fixed**
-  - (placeholder)
-
-- **Security**
-  - (placeholder)
 
 ---
 
@@ -72,4 +54,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 [Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
-[]: https://github.com/Plasius-LTD/react-state/releases/tag/v
+[1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
