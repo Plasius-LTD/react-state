@@ -10,6 +10,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [] - 2025-09-17
+
+- **Added**
   - (placeholder) Add new hooks, scoped store features, or context helpers here.
 
 - **Changed**
@@ -56,5 +70,6 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
+[]: https://github.com/Plasius-LTD/react-state/releases/tag/v
