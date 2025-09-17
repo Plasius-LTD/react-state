@@ -1,6 +1,6 @@
 {
   "name": "@plasius/react-state",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Tiny, testable, typesafe React Scoped Store helper.",
   "keywords": [
     "react",
