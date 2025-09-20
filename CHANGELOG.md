@@ -13,7 +13,13 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
-  - (placeholder)
+  - package.json update to include:
+    - "sideEffects": false,
+    - "files": ["dist"],
+  - package.json removed:
+    - "main": "./dist/index.cjs",
+    - "module": "./dist/index.js",
+    - "types": "./dist/index.d.ts",
 
 - **Fixed**
   - (placeholder)
@@ -24,7 +30,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [1.0.10] - 2025-09-17
 
 - **Fixed**
-  - CD Pipeline ordering fix for version in CHANGELOG.md 
+  - CD Pipeline ordering fix for version in CHANGELOG.md
 
 ## [1.0.7] - 2025-09-17
 
