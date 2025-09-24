@@ -14,7 +14,8 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "outDir": "dist",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "emitDeclarationOnly": false
   },
   "include": ["src"]
 }
