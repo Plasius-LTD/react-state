@@ -1,4 +1,10 @@
 import type { Reducer, Listener } from "./types.js";
+import { deepFreeze } from "./freeze.js";
+
+const DEV =
+  typeof import.meta !== "undefined"
+    ? (import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV
+    : process.env.NODE_ENV !== "production";
 
 // Allow narrower parameter types for callbacks without fighting variance
 type BivariantListener<T> = {
@@ -38,7 +44,7 @@ export function createStore<S extends IState, A extends IAction>(
   reducer: Reducer<S, A>,
   initialState: S
 ): Store<S, A> {
-  let state = initialState;
+  let state: S = DEV ? deepFreeze(initialState) : initialState;
   const listeners = new Set<Listener>();
   const keyListeners = new Map<keyof S, Set<BivariantListener<S[keyof S]>>>();
 
@@ -54,7 +60,9 @@ export function createStore<S extends IState, A extends IAction>(
   const dispatch = (action: A) => {
     const prevState = state;
     const nextState = reducer(state, action);
-
+    
+    if (DEV) deepFreeze(nextState);
+    
     // Distinct-until-changed: if the reducer returns the same reference,
     // skip all notifications (prevents unnecessary re-renders).
     if (Object.is(prevState, nextState)) {

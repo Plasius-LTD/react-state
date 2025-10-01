@@ -10,10 +10,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - In DEV freeze all previous states before calling the reducer
 
 - **Changed**
-  - (placeholder)
+  - Moved react to a peerDependency rather than a dependency
 
 - **Fixed**
   - (placeholder)
