@@ -1,6 +1,6 @@
-import React from "react"; // tests/setup.ts
+// tests/setup.ts
 import "@testing-library/jest-dom";
-import { render, fireEvent } from "@testing-library/react";
+import { act, render, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { createScopedStoreContext } from "../src";
 
@@ -50,7 +50,7 @@ describe("scoped store", () => {
     );
   };
 
-  it("increments, decrements, and sets the counter correctly", () => {
+  it("increments, decrements, and sets the counter correctly", async () => {
     const { getByText, getByLabelText } = render(
       <store.Provider>
         <Counter />
@@ -64,12 +64,15 @@ describe("scoped store", () => {
     expect(input.value).toBe("0");
 
     fireEvent.click(incButton);
+    await act(async () => {});
     expect(input.value).toBe("1");
 
     fireEvent.click(decButton);
+    await act(async () => {});
     expect(input.value).toBe("0");
 
     fireEvent.change(input, { target: { value: "5" } });
+    await act(async () => {});
     expect(input.value).toBe("5");
   });
 });

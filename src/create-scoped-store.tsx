@@ -1,6 +1,29 @@
-import { createContext, useContext, useRef, useSyncExternalStore } from "react";
+import { createContext, useContext, useRef, useSyncExternalStore, useCallback } from "react";
 import type { IState, IAction, Store } from "./store.js";
 import { createStore } from "./store.js";
+
+// Local microtask-based batching (no react-dom dependency)
+const _queue = new Set<() => void>();
+let _queued = false;
+const _schedule = typeof queueMicrotask === "function"
+  ? queueMicrotask
+  : (fn: () => void) => Promise.resolve().then(fn);
+
+function enqueue(fn: () => void) {
+  _queue.add(fn);
+  if (_queued) return;
+  _queued = true;
+  _schedule(() => {
+    _queued = false;
+    const fns = Array.from(_queue);
+    _queue.clear();
+    for (const f of fns) f();
+  });
+}
+
+function makeBatchedSubscribe(subscribe: (l: () => void) => () => void) {
+  return (onChange: () => void) => subscribe(() => enqueue(onChange));
+}
 
 function shallowEqual(a: any, b: any) {
   if (Object.is(a, b)) return true;
@@ -31,22 +54,35 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
 ) {
   const Context = createContext<Store<S, A> | null>(null);
 
-  const store = createStore(reducer, initialState);
-
-  const Provider = ({ children }: { children: React.ReactNode }) => (
-    <Context.Provider value={store}>{children}</Context.Provider>
-  );
+  // Each Provider instance gets its own store.
+  const Provider = ({
+    children,
+    initialState: override,
+  }: {
+    children: React.ReactNode;
+    initialState?: S;
+  }) => {
+    const storeRef = useRef<Store<S, A> | null>(null);
+    if (!storeRef.current) {
+      storeRef.current = createStore(reducer, override ?? initialState);
+    }
+    return <Context.Provider value={storeRef.current}>{children}</Context.Provider>;
+  };
 
   const useStore = (): S => {
     const ctx = useContext(Context);
     if (!ctx) throw new Error("Store not found in context");
-    return useSyncExternalStore(ctx.subscribe, ctx.getState, ctx.getState);
+    return useSyncExternalStore(
+      makeBatchedSubscribe(ctx.subscribe),
+      ctx.getState,
+      ctx.getState
+    );
   };
 
   const useDispatch = (): ((action: A) => void) => {
     const ctx = useContext(Context);
     if (!ctx) throw new Error("Dispatch not found in context");
-    return (action: A) => ctx.dispatch(action);
+    return useCallback((action: A) => ctx.dispatch(action), [ctx]);
   };
 
   function useSelector<T>(
@@ -58,7 +94,7 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
 
     // Subscribe to the raw state snapshot (stable reference until a dispatch)
     const state = useSyncExternalStore(
-      ctx.subscribe,
+      makeBatchedSubscribe(ctx.subscribe),
       ctx.getState,
       ctx.getState
     );
@@ -77,7 +113,6 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
   }
 
   return {
-    store,
     Context,
     Provider,
     useStore,
