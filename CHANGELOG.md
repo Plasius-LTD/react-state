@@ -13,6 +13,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.1.0] - 2025-10-10
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
   - Improved batching of change notifications.
   - Tests now (need to) include notification flushes <code>await act(async ()=>{});</code>
 
@@ -116,10 +130,11 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.0.13...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.1.0...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
 [1.0.11]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.11
 [1.0.12]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.12
 [1.0.13]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.13
+[1.1.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.1.0
