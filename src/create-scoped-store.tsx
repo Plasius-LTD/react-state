@@ -1,6 +1,16 @@
-import { createContext, useContext, useRef, useSyncExternalStore, useCallback } from "react";
+import { createContext, useContext, useRef, useSyncExternalStore, useCallback, useEffect } from "react";
 import type { IState, IAction, Store } from "./store.js";
 import { createStore } from "./store.js";
+
+// DEV-only tracking (no-op in production)
+const __DEV__ = typeof process !== "undefined" ? process.env.NODE_ENV !== "production" : true;
+function devTrack(name: string, props?: Record<string, unknown>) {
+  if (!__DEV__) return;
+  try {
+    const t = (globalThis as any)?.track;
+    if (typeof t === "function") t(name, props);
+  } catch {}
+}
 
 // Local microtask-based batching (no react-dom dependency)
 const _queue = new Set<() => void>();
@@ -18,11 +28,23 @@ function enqueue(fn: () => void) {
     const fns = Array.from(_queue);
     _queue.clear();
     for (const f of fns) f();
+    devTrack("scoped:batch:flush", { size: fns.length });
   });
 }
 
 function makeBatchedSubscribe(subscribe: (l: () => void) => () => void) {
-  return (onChange: () => void) => subscribe(() => enqueue(onChange));
+  return (onChange: () => void) => {
+    devTrack("scoped:sub:add");
+    const wrapped = () => {
+      devTrack("scoped:notify:enqueue");
+      enqueue(onChange);
+    };
+    const unsubscribe = subscribe(wrapped);
+    return () => {
+      devTrack("scoped:sub:remove");
+      unsubscribe();
+    };
+  };
 }
 
 function shallowEqual(a: any, b: any) {
@@ -65,13 +87,21 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
     const storeRef = useRef<Store<S, A> | null>(null);
     if (!storeRef.current) {
       storeRef.current = createStore(reducer, override ?? initialState);
+      devTrack("scoped:store:create");
     }
+
+    useEffect(() => {
+      devTrack("scoped:provider:mount");
+      return () => devTrack("scoped:provider:unmount");
+    }, []);
+
     return <Context.Provider value={storeRef.current}>{children}</Context.Provider>;
   };
 
   const useStore = (): S => {
     const ctx = useContext(Context);
     if (!ctx) throw new Error("Store not found in context");
+    devTrack("scoped:useStore");
     return useSyncExternalStore(
       makeBatchedSubscribe(ctx.subscribe),
       ctx.getState,
@@ -105,9 +135,11 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
     const nextSelected = selector(state);
 
     if (last && last.state === state && isEqual(last.selected, nextSelected)) {
+      devTrack("scoped:selector:cache-hit");
       return last.selected; // return cached reference to satisfy getSnapshot caching
     }
 
+    devTrack("scoped:selector:cache-miss");
     lastRef.current = { state, selected: nextSelected };
     return nextSelected;
   }
