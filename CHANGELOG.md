@@ -18,7 +18,9 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - React peer dependency broadened to `^18.2 || ^19` for wider compatibility.
 
 - **Fixed**
-  - (placeholder)
+  - Scoped Provider re-initializes when `initialState` changes instead of sticking to the first render.
+  - Selector listeners now honor custom equality to avoid spurious notifications.
+  - A throwing listener no longer prevents other listeners from running (errors re-thrown after notification).
 
 - **Security**
   - (placeholder)

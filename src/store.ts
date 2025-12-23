@@ -45,7 +45,8 @@ export interface Store<S extends IState, A extends IAction> {
    */
   subscribeWithSelector<T>(
     selector: (state: S) => T,
-    listener: (selected: T) => void
+    listener: (selected: T) => void,
+    isEqual?: (a: T, b: T) => boolean
   ): () => void;
 }
 
@@ -61,6 +62,7 @@ export function createStore<S extends IState, A extends IAction>(
     selector: (state: S) => T;
     listener: BivariantListener<T>;
     lastValue: T;
+    isEqual?: (a: T, b: T) => boolean;
   }
   const selectorListeners = new Set<SelectorEntry<unknown>>();
 
@@ -97,27 +99,46 @@ export function createStore<S extends IState, A extends IAction>(
     // notify does not skip the next listener)
     const globalSnapshot = [...listeners];
     devTrack("store:notify:all", { listeners: globalSnapshot.length });
-    for (const listener of globalSnapshot) listener();
+    let firstError: unknown;
+    for (const listener of globalSnapshot) {
+      try {
+        listener();
+      } catch (err) {
+        if (!firstError) firstError = err;
+      }
+    }
 
     // Notify key listeners only when that key actually changed (Object.is)
     for (const [key, set] of keyListeners.entries()) {
       if (!Object.is(prevState[key], state[key])) {
         devTrack("store:notify:key", { key: String(key), listeners: set.size });
-        for (const listener of [...set]) listener(state[key]);
+        for (const listener of [...set]) {
+          try {
+            listener(state[key]);
+          } catch (err) {
+            if (!firstError) firstError = err;
+          }
+        }
       }
     }
 
     // Notify selector listeners only when selected value changed (Object.is)
     let selNotifies = 0;
-    selectorListeners.forEach((entry) => {
+    for (const entry of [...selectorListeners]) {
       const nextValue = (entry.selector as (s: S) => unknown)(state);
-      if (!Object.is(entry.lastValue, nextValue)) {
+      const equal = (entry.isEqual as ((a: unknown, b: unknown) => boolean) | undefined) ?? Object.is;
+      if (!equal(entry.lastValue, nextValue)) {
         entry.lastValue = nextValue as unknown;
-        (entry.listener as (v: unknown) => void)(nextValue);
+        try {
+          (entry.listener as (v: unknown) => void)(nextValue);
+        } catch (err) {
+          if (!firstError) firstError = err;
+        }
         selNotifies++;
       }
-    });
+    }
     devTrack("store:notify:selector", { listeners: selNotifies });
+    if (firstError) throw firstError;
   };
 
   const subscribe = (listener: Listener) => {
@@ -147,12 +168,14 @@ export function createStore<S extends IState, A extends IAction>(
 
   const subscribeWithSelector = <T>(
     selector: (state: S) => T,
-    listener: (selected: T) => void
+    listener: (selected: T) => void,
+    isEqual?: (a: T, b: T) => boolean
   ) => {
     const entry: SelectorEntry<T> = {
       selector,
       listener: listener as BivariantListener<T>,
       lastValue: selector(state),
+      isEqual,
     };
     selectorListeners.add(entry as unknown as SelectorEntry<unknown>);
     devTrack("store:sub:selector:add", { size: selectorListeners.size });

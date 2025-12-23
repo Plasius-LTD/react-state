@@ -75,4 +75,18 @@ describe("createScopedStoreContext extras", () => {
     };
     expect(() => render(<Broken />)).toThrow("Store not found in context");
   });
+
+  it("does not reset when Provider initialState prop changes (store sticks to first value)", () => {
+    const App = ({ initial }: { initial: State }) => (
+      <scoped.Provider initialState={initial}>
+        <SelectionView />
+      </scoped.Provider>
+    );
+
+    const { rerender } = render(<App initial={{ count: 1 }} />);
+    expect(screen.getByLabelText("double")).toHaveTextContent("2");
+
+    rerender(<App initial={{ count: 5 }} />);
+    expect(screen.getByLabelText("double")).toHaveTextContent("10");
+  });
 });

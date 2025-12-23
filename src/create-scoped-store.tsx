@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useSyncExternalStore, useCallback, useEffect } from "react";
+import { createContext, useContext, useRef, useSyncExternalStore, useCallback, useEffect, useMemo } from "react";
 import type { IState, IAction, Store } from "./store.js";
 import { createStore } from "./store.js";
 
@@ -84,18 +84,18 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
     children: React.ReactNode;
     initialState?: S;
   }) => {
-    const storeRef = useRef<Store<S, A> | null>(null);
-    if (!storeRef.current) {
-      storeRef.current = createStore(reducer, override ?? initialState);
+    const store = useMemo(() => {
+      const next = createStore(reducer, override ?? initialState);
       devTrack("scoped:store:create");
-    }
+      return next;
+    }, [reducer, override, initialState]);
 
     useEffect(() => {
       devTrack("scoped:provider:mount");
       return () => devTrack("scoped:provider:unmount");
     }, []);
 
-    return <Context.Provider value={storeRef.current}>{children}</Context.Provider>;
+    return <Context.Provider value={store}>{children}</Context.Provider>;
   };
 
   const useStore = (): S => {
@@ -147,7 +147,7 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
         lastRef.current = { selected: nextSelected };
         devTrack("scoped:selector:notify");
         enqueue(onChange);
-      });
+      }, isEqual);
       return () => {
         devTrack("scoped:selector:sub:remove");
         unsubscribe();

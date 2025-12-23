@@ -14,6 +14,12 @@
 
 `@plasius/react-state` provides a scoped state management solution for React applications. It allows developers to create isolated, testable, and composable stores without introducing heavy dependencies.
 
+**Key traits**
+- React 18/19 compatible; uses `useSyncExternalStore` for tearing-safe snapshots.
+- Distinct-until-changed dispatch flow to avoid needless notifications and re-renders.
+- Selector subscriptions accept custom equality to prevent redundant renders when slices are unchanged.
+- Scoped Provider recreates its store when `initialState` changes so fresh trees start from fresh state.
+
 ---
 
 ## Installation

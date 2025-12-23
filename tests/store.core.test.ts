@@ -122,6 +122,17 @@ describe("subscribeWithSelector (derived changes)", () => {
     expect(cb).toHaveBeenLastCalledWith("y");
     un();
   });
+
+  it("supports equality comparator to skip structurally equal derived values", () => {
+    const store = createStore<S, A>(reducer, { count: 1, meta: { tag: "x" } });
+    const cb = vi.fn();
+    const sel = (s: S) => ({ doubled: s.count * 2 }); // new object every time
+
+    store.subscribeWithSelector(sel, cb, (a, b) => a.doubled === b.doubled);
+    store.dispatch({ type: "setMeta", tag: "x" }); // meta change only
+
+    expect(cb).toHaveBeenCalledTimes(0);
+  });
 });
 
 describe("notification order", () => {
@@ -291,5 +302,20 @@ describe("mutation during iteration – per-key/selector", () => {
     store.dispatch({ type: "inc" });
 
     expect(log.length === 1 || log.length === 2).toBe(true);
+  });
+});
+
+describe("listener error isolation", () => {
+  it("one listener throwing does not prevent others from running", () => {
+    const store = createStore<S, A>(reducer, initial);
+    const safe = vi.fn();
+
+    store.subscribe(() => {
+      throw new Error("boom");
+    });
+    store.subscribe(safe);
+
+    expect(() => store.dispatch({ type: "inc" })).toThrow("boom");
+    expect(safe).toHaveBeenCalledTimes(1);
   });
 });
