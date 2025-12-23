@@ -69,7 +69,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^19"
+    "react": "^18.2 || ^19"
   },
   "funding": [
     {

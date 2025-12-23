@@ -13,7 +13,9 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
-  - (placeholder)
+  - `useStore` now uses `useSyncExternalStore` for tearing-safe React snapshots.
+  - Scoped `useSelector` subscribes via selector equality to skip redundant renders and batches notifications.
+  - React peer dependency broadened to `^18.2 || ^19` for wider compatibility.
 
 - **Fixed**
   - (placeholder)

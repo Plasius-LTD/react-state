@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 import type { Store, IState, IAction } from "./store.js";
 
@@ -47,40 +47,21 @@ export function StoreProvider<S extends IState, A extends IAction>({
 
 export function useStore<S extends IState>(): S {
   const store = useStoreInstance<S, IAction>();
-  const [state, setState] = useState<S>(() => store.getState());
-  const prevRef = React.useRef<S>(state);
-
-  useEffect(() => {
-    devTrack("store:react:subscribe");
-    const unsubscribe = store.subscribe(() => {
-      const next = store.getState();
-      if (!Object.is(prevRef.current, next)) {
-        if (__DEV__) {
-          try {
-            const prev = prevRef.current as unknown as Record<string, unknown>;
-            const cur = next as unknown as Record<string, unknown>;
-            const changedKeys = Array.from(
-              new Set([...Object.keys(prev || {}), ...Object.keys(cur || {})])
-            ).filter((k) => !Object.is(prev?.[k], cur?.[k]));
-            devTrack("store:react:update", {
-              changed: changedKeys,
-              count: changedKeys.length,
-            });
-          } catch {}
-        }
-        prevRef.current = next;
-        setState(next);
-      } else {
-        devTrack("store:react:no-op");
-      }
-    });
-    return () => {
-      devTrack("store:react:unsubscribe");
-      unsubscribe();
-    };
-  }, [store]);
-
-  return state;
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      devTrack("store:react:subscribe");
+      const unsubscribe = store.subscribe(() => {
+        devTrack("store:react:notify");
+        onStoreChange();
+      });
+      return () => {
+        devTrack("store:react:unsubscribe");
+        unsubscribe();
+      };
+    },
+    store.getState,
+    store.getState
+  );
 }
 
 export function useDispatch<A extends IAction>(): Store<IState, A>["dispatch"] {

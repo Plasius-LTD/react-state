@@ -122,26 +122,39 @@ export function createScopedStoreContext<S extends IState, A extends IAction>(
     const ctx = useContext(Context);
     if (!ctx) throw new Error("Store not found in context");
 
-    // Subscribe to the raw state snapshot (stable reference until a dispatch)
-    const state = useSyncExternalStore(
-      makeBatchedSubscribe(ctx.subscribe),
-      ctx.getState,
-      ctx.getState
-    );
+    const lastRef = useRef<{ selected: T } | null>(null);
 
-    // Cache the selected slice per state snapshot to avoid returning fresh objects during render
-    const lastRef = useRef<{ state: S; selected: T } | null>(null);
-    const last = lastRef.current;
-    const nextSelected = selector(state);
+    const getSnapshot = () => {
+      const nextSelected = selector(ctx.getState());
+      const last = lastRef.current;
+      if (last && isEqual(last.selected, nextSelected)) {
+        devTrack("scoped:selector:cache-hit");
+        return last.selected;
+      }
+      devTrack("scoped:selector:cache-miss");
+      lastRef.current = { selected: nextSelected };
+      return nextSelected;
+    };
 
-    if (last && last.state === state && isEqual(last.selected, nextSelected)) {
-      devTrack("scoped:selector:cache-hit");
-      return last.selected; // return cached reference to satisfy getSnapshot caching
-    }
+    const subscribe = (onChange: () => void) => {
+      devTrack("scoped:selector:sub:add");
+      const unsubscribe = ctx.subscribeWithSelector(selector, (nextSelected) => {
+        const last = lastRef.current;
+        if (last && isEqual(last.selected, nextSelected)) {
+          devTrack("scoped:selector:skip");
+          return;
+        }
+        lastRef.current = { selected: nextSelected };
+        devTrack("scoped:selector:notify");
+        enqueue(onChange);
+      });
+      return () => {
+        devTrack("scoped:selector:sub:remove");
+        unsubscribe();
+      };
+    };
 
-    devTrack("scoped:selector:cache-miss");
-    lastRef.current = { state, selected: nextSelected };
-    return nextSelected;
+    return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
   }
 
   return {
