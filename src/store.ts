@@ -127,7 +127,14 @@ export function createStore<S extends IState, A extends IAction>(
     for (const entry of [...selectorListeners]) {
       const nextValue = (entry.selector as (s: S) => unknown)(state);
       const equal = (entry.isEqual as ((a: unknown, b: unknown) => boolean) | undefined) ?? Object.is;
-      if (!equal(entry.lastValue, nextValue)) {
+      let isSame = false;
+      try {
+        isSame = equal(entry.lastValue, nextValue);
+      } catch (err) {
+        if (!firstError) firstError = err;
+        continue;
+      }
+      if (!isSame) {
         entry.lastValue = nextValue as unknown;
         try {
           (entry.listener as (v: unknown) => void)(nextValue);

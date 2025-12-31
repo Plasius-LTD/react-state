@@ -133,6 +133,45 @@ describe("subscribeWithSelector (derived changes)", () => {
 
     expect(cb).toHaveBeenCalledTimes(0);
   });
+
+  it("defaults to Object.is so primitive selectors ignore unrelated changes", () => {
+    const store = createStore<S, A>(reducer, { count: 1, meta: { tag: "x" } });
+    const sel = (s: S) => s.count;
+    const cb = vi.fn();
+
+    store.subscribeWithSelector(sel, cb);
+    store.dispatch({ type: "setMeta", tag: "x" }); // meta change only
+    expect(cb).toHaveBeenCalledTimes(0);
+
+    store.dispatch({ type: "inc" });
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenLastCalledWith(2);
+  });
+
+  it("surface comparator errors while still notifying other selectors", () => {
+    const store = createStore<S, A>(reducer, { count: 1, meta: { tag: "x" } });
+    const calls: string[] = [];
+
+    store.subscribeWithSelector(
+      (s) => s.count,
+      () => {
+        calls.push("a");
+      },
+      () => {
+        throw new Error("cmp boom");
+      }
+    );
+
+    store.subscribeWithSelector(
+      (s) => s.meta?.tag,
+      () => {
+        calls.push("b");
+      }
+    );
+
+    expect(() => store.dispatch({ type: "setMeta", tag: "y" })).toThrow("cmp boom");
+    expect(calls).toContain("b");
+  });
 });
 
 describe("notification order", () => {

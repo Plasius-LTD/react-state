@@ -65,4 +65,27 @@ describe("StoreProvider + hooks", () => {
       "StoreProvider is missing in the React tree"
     );
   });
+
+  it("returns a stable dispatch reference across renders", () => {
+    const store = createStore<State, Action>(reducer, { count: 0 });
+    const seen = new Set<unknown>();
+
+    const Collector = () => {
+      const dispatch = useDispatch<Action>();
+      seen.add(dispatch);
+      const state = useStore<State>();
+      React.useEffect(() => {
+        if (state.count < 2) dispatch({ type: "inc" });
+      }, [dispatch, state.count]);
+      return null;
+    };
+
+    render(
+      <StoreProvider store={store}>
+        <Collector />
+      </StoreProvider>
+    );
+
+    expect(seen.size).toBe(1);
+  });
 });

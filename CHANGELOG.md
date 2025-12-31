@@ -10,17 +10,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Regression tests for dispatch batching, selector comparator errors, and dispatch stability.
 
 - **Changed**
   - `useStore` now uses `useSyncExternalStore` for tearing-safe React snapshots.
   - Scoped `useSelector` subscribes via selector equality to skip redundant renders and batches notifications.
   - React peer dependency broadened to `^18.2 || ^19` for wider compatibility.
+  - `useDispatch` now returns a stable reference across renders to avoid dependency churn.
 
 - **Fixed**
   - Scoped Provider re-initializes when `initialState` changes instead of sticking to the first render.
-  - Selector listeners now honor custom equality to avoid spurious notifications.
+  - Selector listeners now honor custom equality to avoid spurious notifications, defaulting to `Object.is` when none is supplied.
+  - Selector equality errors are surfaced while other selectors continue to notify.
   - A throwing listener no longer prevents other listeners from running (errors re-thrown after notification).
+  - Scoped notifications coalesce multiple same-tick dispatches into a single render flush.
 
 - **Security**
   - (placeholder)

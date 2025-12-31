@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen, act, waitFor } from "@testing-library/react";
+import { render, screen, act, waitFor, fireEvent } from "@testing-library/react";
 import React from "react";
 import { beforeEach } from "vitest";
 import { createScopedStoreContext } from "../src/create-scoped-store";
@@ -88,5 +88,42 @@ describe("createScopedStoreContext extras", () => {
 
     rerender(<App initial={{ count: 5 }} />);
     expect(screen.getByLabelText("double")).toHaveTextContent("10");
+  });
+
+  it("batches same-tick dispatch notifications (single render for multiple dispatches)", async () => {
+    const batched = createScopedStoreContext(
+      (s: State, a: Action) => (a.type === "inc" ? { count: s.count + 1 } : s),
+      { count: 0 }
+    );
+    let renderCount = 0;
+
+    const Counter = () => {
+      renderCount++;
+      const state = batched.useStore();
+      const dispatch = batched.useDispatch();
+      return (
+        <div>
+          <div aria-label="count">{state.count}</div>
+          <button onClick={() => dispatch({ type: "inc" })}>inc</button>
+        </div>
+      );
+    };
+
+    render(
+      <batched.Provider>
+        <Counter />
+      </batched.Provider>
+    );
+
+    expect(screen.getByLabelText("count")).toHaveTextContent("0");
+    expect(renderCount).toBe(1);
+
+    act(() => {
+      fireEvent.click(screen.getByText("inc"));
+      fireEvent.click(screen.getByText("inc"));
+    });
+
+    await waitFor(() => expect(screen.getByLabelText("count")).toHaveTextContent("2"));
+    expect(renderCount).toBe(2); // one re-render for the batched flush
   });
 });
