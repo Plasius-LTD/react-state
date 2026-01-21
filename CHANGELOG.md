@@ -48,6 +48,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - @plasius/nfr tracking added
 
 - **Changed**
+  - Add `main`, `module`, and `types` fields alongside the export map to improve CJS/ESM compatibility.
   - (placeholder)
 
 - **Fixed**
