@@ -1,10 +1,16 @@
 import type { Reducer, Listener } from "./types.js";
 import { deepFreeze } from "./freeze.js";
 
-const DEV =
-  typeof import.meta !== "undefined"
-    ? (import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV
-    : process.env.NODE_ENV !== "production";
+const DEV = (() => {
+  const metaEnv = (import.meta as unknown as { env?: { DEV?: boolean } }).env;
+  if (metaEnv && Object.prototype.hasOwnProperty.call(metaEnv, "DEV")) {
+    return Boolean(metaEnv.DEV);
+  }
+  if (typeof process !== "undefined" && process.env) {
+    return process.env.NODE_ENV !== "production";
+  }
+  return true;
+})();
 
 // Lightweight DEV-only tracker
 function devTrack(name: string, props?: Record<string, unknown>) {
