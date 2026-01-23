@@ -19,6 +19,7 @@
 - Keep public APIs stable and typed; prefer small, focused changes.
 - Avoid editing `dist/` unless explicitly requested (generated output).
 - Update docs or `CHANGELOG.md` when user-facing behavior changes.
+- Architectural changes require ADRs in `docs/adrs/` (or the repo ADRs folder); ensure a package-function ADR exists.
 - Follow `CONTRIBUTING.md` for commit and contribution norms.
 
 ## Notes for agents
