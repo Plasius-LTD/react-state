@@ -32,6 +32,17 @@ npm install @plasius/react-state
 
 ---
 
+## Demo
+
+```bash
+npm run build
+node demo/example.mjs
+```
+
+See `demo/README.md` for the local sanity-check scaffold.
+
+---
+
 ## Usage Example
 
 ### Accessing the store
