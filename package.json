@@ -1,6 +1,6 @@
 {
   "name": "@plasius/react-state",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Tiny, testable, typesafe React Scoped Store helper.",
   "keywords": [
     "react",
@@ -98,7 +98,7 @@
     }
   ],
   "dependencies": {
-    "@plasius/nfr": "^1.0.4"
+    "@plasius/nfr": "^1.0.5"
   },
   "overrides": {
     "minimatch": "^10.2.1"
