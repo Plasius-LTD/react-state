@@ -1,9 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import {
   createStore,
-  type Store,
-  type IState,
-  type IAction,
 } from "../src/store";
 
 type S = { count: number; meta?: { tag: string } };

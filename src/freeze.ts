@@ -7,13 +7,11 @@ export function deepFreeze<T>(obj: T, seen = new WeakSet<object>()): T {
 
   // Freeze children first
   for (const key of Object.getOwnPropertyNames(o)) {
-    // @ts-expect-error index access
     const val = (o as any)[key];
     if (val && typeof val === "object") deepFreeze(val, seen);
   }
   // Also handle symbols (rare but safe)
   for (const sym of Object.getOwnPropertySymbols(o)) {
-    // @ts-expect-error index access
     const val = (o as any)[sym];
     if (val && typeof val === "object") deepFreeze(val, seen);
   }
