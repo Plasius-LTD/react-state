@@ -21,6 +21,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 - **Security**
   - (placeholder)
 
+## [1.2.10] - 2026-04-21
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
 ## [1.2.9] - 2026-04-21
 
 - **Added**
@@ -250,7 +264,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.9...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.10...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -280,3 +294,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.7
 [1.2.8]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.8
 [1.2.9]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.9
+[1.2.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.10
