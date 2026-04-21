@@ -98,7 +98,7 @@
     }
   ],
   "dependencies": {
-    "@plasius/nfr": "^1.0.6"
+    "@plasius/nfr": "^1.0.7"
   },
   "overrides": {
     "minimatch": "^10.2.1"
