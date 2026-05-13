@@ -13,6 +13,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.12] - 2026-05-13
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
   - Refreshed dependencies to the latest stable published versions.
   - (placeholder)
 
@@ -279,7 +293,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.11...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.12...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -311,3 +325,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.9]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.9
 [1.2.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.10
 [1.2.11]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.11
+[1.2.12]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.12
