@@ -159,7 +159,7 @@ The following repo- or directory-specific guidance from the previous local `AGEN
 - Source lives in `src/`, tests in `tests/`, and build output in `dist/`.
 
 ### Setup
-- Use Node 22 (see `.nvmrc`) and npm.
+- Use Node 24 (see `.nvmrc`) and npm.
 - Install dependencies with `npm ci`.
 
 ### Common commands
