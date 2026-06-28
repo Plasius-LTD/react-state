@@ -13,7 +13,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
-  - (placeholder)
+  - Refreshed development dependency baselines to `@types/node@26.0.1`, `@typescript-eslint/*@8.62.0`, and `eslint@10.6.0`.
 
 - **Fixed**
   - (placeholder)
