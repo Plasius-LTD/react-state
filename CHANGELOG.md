@@ -13,6 +13,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.17] - 2026-06-28
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
   - Refreshed development dependency baselines to `@types/node@26.0.1`, `@typescript-eslint/*@8.62.0`, and `eslint@10.6.0`.
 
 - **Fixed**
@@ -321,7 +335,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.16...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.17...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -356,3 +370,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.12]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.12
 [1.2.15]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.15
 [1.2.16]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.16
+[1.2.17]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.17
