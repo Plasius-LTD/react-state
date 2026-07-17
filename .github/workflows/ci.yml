@@ -141,12 +141,3 @@ jobs:
             echo "Coverage gate failed: ${PCT}% < 80%"
             exit 1
           }
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ${{ env.LCOV_FILE }}
-          flags: unittests
-          fail_ci_if_error: true
-          slug: ${{ github.repository }}
