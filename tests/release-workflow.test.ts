@@ -26,10 +26,14 @@ describe("package release trust boundary", () => {
   });
 
   it("keeps same-repository pull-request CI on explicit trusted runners", () => {
+    expect(ciWorkflow).toContain("workflow_dispatch:");
     expect(ciWorkflow).toContain("pull_request:");
-    expect(ciWorkflow).toContain("runs-on: [self-hosted, Linux, X64]");
+    expect(ciWorkflow).toContain("runs-on: ubuntu-latest");
     expect(ciWorkflow).toContain("github.event.pull_request.head.repo.full_name == github.repository");
+    expect(ciWorkflow).not.toMatch(/\n\s+cache:\s*["']?npm["']?/u);
+    expect(ciWorkflow.match(/package-manager-cache: false/gu)).toHaveLength(2);
+    expect(ciWorkflow).not.toContain("self-hosted");
     expect(ciWorkflow).not.toContain("pull_request_target");
-    expect(ciWorkflow).not.toContain("fromJSON(vars.");
+    expect(ciWorkflow).not.toContain("fromJSON(");
   });
 });

@@ -17,10 +17,13 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - (placeholder)
 
 - **Fixed**
+  - Added exact-commit CI dispatch and disabled package-manager cache finalization in both hosted validation jobs.
   - (placeholder)
 
 - **Security**
-  - Removed the npm write-token path, added a fail-closed npm 11.5.1-or-newer OIDC guard, and denied fork PR code access to self-hosted CI.
+  - Removed the npm write-token path, added a fail-closed npm 11.5.1-or-newer OIDC guard, and denied fork PR code access to reviewed CI.
+  - Pinned patched transitive npm dependencies to clear the current audit baseline.
+  - Moved reviewed CI to explicit GitHub-hosted runners while retaining the same-repository pull-request guard.
   - Added fail-closed source and npm-package admission for the administrative contributor registry and pinned the CI/CD runtime to Node.js 24.18.0 LTS.
   - (placeholder)
 
