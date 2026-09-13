@@ -9,6 +9,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+### Changed
+- Refresh compatible npm dependencies from the registry for the weekly dependency maintenance wave.
+
+
 - **Added**
   - (placeholder)
 
