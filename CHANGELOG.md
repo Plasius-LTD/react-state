@@ -9,6 +9,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.18] - 2026-09-13
+
 ### Changed
 - Refresh compatible npm dependencies from the registry for the weekly dependency maintenance wave.
 
@@ -346,7 +360,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.17...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.18...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -382,3 +396,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.15]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.15
 [1.2.16]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.16
 [1.2.17]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.17
+[1.2.18]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.18
