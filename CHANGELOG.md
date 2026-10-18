@@ -9,6 +9,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.22] - 2026-10-18
+
 - Refresh npm dependency lockfile to current supported stable versions (weekly maintenance, 2026-10-18). Refresh published Plasius package baselines after upstream releases.
 
 - **Added**
@@ -410,7 +424,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.21...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.22...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -450,3 +464,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.19]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.19
 [1.2.20]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.20
 [1.2.21]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.21
+[1.2.22]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.22
