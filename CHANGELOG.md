@@ -9,6 +9,8 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- Restore trusted push-only self-hosted CI on the approved quarantined runner group, with strict installs, bounded jobs, non-persistent checkout credentials and final package admission.
+
 - **Added**
   - (placeholder)
 
