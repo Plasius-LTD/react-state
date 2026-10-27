@@ -9,6 +9,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.23] - 2026-10-27
+
 - Restore trusted push-only self-hosted CI on the approved quarantined runner group, with strict installs, bounded jobs, non-persistent checkout credentials and final package admission.
 
 - **Added**
@@ -426,7 +440,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.22...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.23...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -467,3 +481,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.20]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.20
 [1.2.21]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.21
 [1.2.22]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.22
+[1.2.23]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.23
