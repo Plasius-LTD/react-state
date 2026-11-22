@@ -9,6 +9,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [1.2.24] - 2026-11-22
+
 - Use the current public Vitest runtime entry for the custom jsdom test environment.
 
 - Refresh supported npm dependency and security tooling baselines; preserve runtime API contracts (weekly maintenance, 2026-11-22).
@@ -444,7 +458,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.23...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/react-state/compare/v1.2.24...HEAD
 [1.0.0]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.0
 [1.0.7]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.7
 [1.0.10]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.0.10
@@ -486,3 +500,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [1.2.21]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.21
 [1.2.22]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.22
 [1.2.23]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.23
+[1.2.24]: https://github.com/Plasius-LTD/react-state/releases/tag/v1.2.24
