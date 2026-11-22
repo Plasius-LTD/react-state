@@ -1,5 +1,5 @@
 import vm from "node:vm";
-import { builtinEnvironments } from "vitest/environments";
+import { builtinEnvironments } from "vitest/runtime";
 
 /**
  * Vitest + jsdom crash in this environment because `vm.constants` is undefined,
