@@ -99,7 +99,7 @@
     }
   ],
   "dependencies": {
-    "@plasius/nfr": "^1.1.6"
+    "@plasius/nfr": "^1.1.7"
   },
   "overrides": {
     "brace-expansion": "5.0.12",

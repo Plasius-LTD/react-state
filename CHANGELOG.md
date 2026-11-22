@@ -9,6 +9,8 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- Consume the verified upstream security releases from the weekly dependency rollout; retain existing runtime contracts.
+
 - **Added**
   - (placeholder)
 
